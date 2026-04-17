@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="BE/BE.csproj" />
+  <Project Path="BLL/BLL.csproj" />
+  <Project Path="DAL/DAL.csproj" />
+  <Project Path="GUI/GUI.csproj" />
+  <Project Path="Servicios/Servicios.csproj" />
+</Solution>
