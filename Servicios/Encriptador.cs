@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Servicios
 {
-    public class Encriptador
+    public static class Encriptador
     {
         private const int SaltSize = 16; // 128 bits
         private const int HashSize = 20; // 160 bits
         private const int Iterations = 100000;
 
-        public string Hash(string contraseña)
+        public static string Hash(string contraseña)
         {
             // 1. Generar Salt aleatorio
             byte[] salt = new byte[SaltSize];
@@ -36,7 +36,7 @@ namespace Servicios
             }
         }
 
-        public bool VerificarContraseña(string contraseñaIngresada, string hashAlmacenado)
+        public static bool VerificarContraseña(string contraseñaIngresada, string hashAlmacenado)
         {
             // 1. Obtener bytes del string Base64
             byte[] hashBytes = Convert.FromBase64String(hashAlmacenado);

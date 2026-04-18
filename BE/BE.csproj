@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bitacora.cs" />
+    <Compile Include="Criticidad.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

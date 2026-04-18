@@ -1,19 +1,29 @@
-﻿using System;
+﻿using BE;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Collections.Specialized.BitVector32;
+using DAL;
 
 namespace Servicios
 {
     public class Bitacora
     {
-        //public void Registrar(DateTime fecha, string detalle)
-        //{
-        //    SessionManager session = SessionManager.GetInstance();
+        DAL.Bitacora bitacora;
+        public void Grabar(Form formulario, string actividad, Criticidad criticidad)
+        {
+            BE.Bitacora registro = new BE.Bitacora();
+            registro.Fecha = DateTime.Now;
+            registro.Usuario = SessionManager.GetInstance().Usuario;
+            registro.Modulo = formulario.Text;
+            registro.Actividad = actividad;
+            registro.Criticidad = criticidad;
 
-        //    BitacoraDAL bitacoraDAL = new BitacoraDAL();
-        //    bitacoraDAL.Registrar(fecha, session.Usuario.Username, detalle);
-        //}
+            bitacora.Registrar(registro);
+        }
     }
 }
