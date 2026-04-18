@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BE
 {
@@ -10,7 +6,7 @@ namespace BE
     {
         public string Id { get; set; }
         public DateTime Fecha { get; set; }
-        public BE.Usuario Usuario { get; set; }
+        public int IdUsuario { get; set; }
         public string Modulo { get; set; }
         public string Actividad { get; set; }
         public string Detalle { get; set; }

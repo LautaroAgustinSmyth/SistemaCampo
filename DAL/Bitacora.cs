@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -14,7 +10,7 @@ namespace DAL
         {
             SqlParameter[] parametros = new SqlParameter[] {
                 new SqlParameter("@fecha",registro.Fecha),
-                new SqlParameter("@usuario",registro.Usuario.Id),
+                new SqlParameter("@usuario",registro.IdUsuario),
                 new SqlParameter("@modulo",registro.Modulo),
                 new SqlParameter("@actividad",registro.Actividad),
                 new SqlParameter("@detalle",registro.Detalle),
