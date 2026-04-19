@@ -9,7 +9,10 @@ namespace DAL
         private static readonly object _lock = new object();
 
         private readonly string _cadenaConexion = "Data Source=.;Initial Catalog=ProyectoFinal;Integrated Security=True";
-        private Acceso() { }
+
+        private Acceso()
+        { }
+
         public static Acceso GetInstance()
         {
             if (_instance == null)

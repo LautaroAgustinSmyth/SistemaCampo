@@ -6,6 +6,7 @@ namespace DAL
     public class Bitacora
     {
         private readonly Acceso _acceso = Acceso.GetInstance();
+
         public void Registrar(BE.Bitacora registro)
         {
             SqlParameter[] parametros = new SqlParameter[] {

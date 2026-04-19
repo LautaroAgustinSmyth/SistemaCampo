@@ -1,6 +1,5 @@
 ﻿using System.Windows.Forms;
 
-
 namespace BLL
 {
     public static class Configuracion
