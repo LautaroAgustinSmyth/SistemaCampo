@@ -13,6 +13,7 @@ namespace GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            BLL.Configuracion.VerificarConexionDAL();
             Application.Run(new Login());
         }
     }

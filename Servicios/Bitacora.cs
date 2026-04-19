@@ -14,6 +14,7 @@ namespace Servicios
             registro.IdUsuario = Seguridad.SessionManager.GetInstance().Usuario.Id;
             registro.Modulo = formulario.Text;
             registro.Actividad = actividad;
+            registro.Detalle = $"Usuario {registro.IdUsuario} realizó la actividad '{actividad}' en el módulo '{registro.Modulo}' con criticidad '{criticidad}'.";
             registro.Criticidad = criticidad;
 
             bitacora.Registrar(registro);

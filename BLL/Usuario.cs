@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Seguridad;
+using Servicios;
+using System;
+using System.Windows.Forms;
 
 namespace BLL
 {
     public class Usuario
     {
         private DAL.Usuario usuarioDAL = new DAL.Usuario();
-        private Encriptador encriptador = new Encriptador();
         private Servicios.Bitacora bitacora = new Servicios.Bitacora();
 
-        public bool Login(string username, string contraseña)
+        public bool Login(Form formulario, string username, string contraseña)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(contraseña))
             {
@@ -19,20 +21,27 @@ namespace BLL
 
             if (usuario == null) return false;
 
-            bool esValido = encriptador.VerificarContraseña(contraseña, usuario.Contraseña);
+            bool esValido = Encriptador.VerificarContraseña(contraseña, usuario.Contraseña);
 
             if (esValido)
             {
                 SessionManager.GetInstance().Login(usuario);
-                bitacora.Registrar(DateTime.Now, $"Usuario {username} autenticado.");
+                bitacora.Registrar(formulario, "Inicio Sesion", 0);
             }
 
             return esValido;
         }
 
+        public void Logout(Form formulario)
+        {
+            bitacora.Registrar(formulario, "Cierre Sesion", 0);
+            usuarioDAL.Logout();
+            SessionManager.GetInstance().Logout();
+        }
+
         public void Alta(string username, string contraseña)
         {
-            usuarioDAL.Alta(username, encriptador.Hash(contraseña));
+            usuarioDAL.Alta(username, Encriptador.Hash(contraseña));
         }
     }
 }

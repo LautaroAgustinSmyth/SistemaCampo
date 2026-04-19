@@ -17,6 +17,11 @@ namespace DAL
             acceso.Escribir("INSERT INTO Usuario (Username, Contraseña) VALUES (@username, @contraseña)", sp);
         }
 
+        public void Logout()
+        {
+            acceso.CerrarConexion();
+        }
+
         public BE.Usuario ObtenerPorUsername(string username)
         {
             SqlParameter[] parametros = new SqlParameter[]
