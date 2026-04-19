@@ -7,6 +7,7 @@ namespace Servicios
     public class Bitacora
     {
         private readonly DAL.Bitacora _bitacoraDAL = new DAL.Bitacora();
+
         public void Registrar(Form formulario, string actividad, Criticidad criticidad)
         {
             Seguridad.SessionManager sesion = Seguridad.SessionManager.GetInstance();
