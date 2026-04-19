@@ -10,10 +10,9 @@ namespace BLL
 
             if (!conectado)
             {
-                MessageBox.Show(
-                    "No se pudo conectar a la base de datos. Verifique la configuración y vuelva a intentarlo.",
+                MessageBox.Show("No se pudo conectar a la base de datos...",
                     "Error de conexión",
-                    MessageBoxButtons.OK,
+                MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
 

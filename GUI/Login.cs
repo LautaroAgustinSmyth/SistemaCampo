@@ -6,12 +6,13 @@ namespace GUI
 {
     public partial class Login : Form
     {
-        private Usuario usuarioBLL = new Usuario();
+        private Usuario _usuarioBLL = new Usuario();
 
         public Login()
         {
             InitializeComponent();
             txtContraseña.PasswordChar = '*';
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
@@ -19,7 +20,7 @@ namespace GUI
             lblError.Text = string.Empty;
             try
             {
-                bool esValido = usuarioBLL.Login(this, txtUsuario.Text, txtContraseña.Text);
+                bool esValido = _usuarioBLL.Login(this, txtUsuario.Text, txtContraseña.Text);
                 if (esValido)
                 {
                     this.DialogResult = DialogResult.OK;

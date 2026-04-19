@@ -11,7 +11,7 @@ namespace DAL
         {
             SqlParameter[] parametros = new SqlParameter[] {
                 new SqlParameter("@fecha",registro.Fecha),
-                new SqlParameter("@usuario",registro.IdUsuario),
+                new SqlParameter("@idUsuario",registro.IdUsuario),
                 new SqlParameter("@modulo",registro.Modulo),
                 new SqlParameter("@actividad",registro.Actividad),
                 new SqlParameter("@criticidad",(int)registro.Criticidad),
@@ -20,7 +20,7 @@ namespace DAL
 
             try
             {
-                _acceso.Escribir("INSERT INTO Bitacora (fecha, usuario, modulo, actividad, criticidad, detalle) VALUES (@fecha, @usuario, @modulo, @actividad, @criticidad, @detalle)", parametros);
+                _acceso.Escribir("INSERT INTO Bitacora (fecha, idUsuario, modulo, actividad, criticidad, detalle) VALUES (@fecha, @idUsuario, @modulo, @actividad, @criticidad, @detalle)", parametros);
             }
             catch (Exception ex)
             {

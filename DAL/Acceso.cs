@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace DAL
@@ -8,7 +10,7 @@ namespace DAL
         private static Acceso _instance;
         private static readonly object _lock = new object();
 
-        private readonly string _cadenaConexion = "Data Source=.;Initial Catalog=ProyectoFinal;Integrated Security=True";
+        private readonly string _cadenaConexion = ConfigurationManager.ConnectionStrings["MiConexionSQL"].ConnectionString;
 
         private Acceso()
         { }
@@ -57,11 +59,15 @@ namespace DAL
         {
             try
             {
-                var tabla = Leer("SELECT 1", null);
-                return tabla != null && tabla.Rows.Count > 0;
+                using (var conexion = new SqlConnection(_cadenaConexion))
+                {
+                    conexion.Open();
+                    return true;
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"[Acceso] Error: {ex.Message}");
                 return false;
             }
         }

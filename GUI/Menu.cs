@@ -10,6 +10,7 @@ namespace GUI
         public Menu()
         {
             InitializeComponent();
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)

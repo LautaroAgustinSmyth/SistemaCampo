@@ -8,34 +8,34 @@ namespace DAL
     {
         private readonly Acceso _acceso = Acceso.GetInstance();
 
-        public void Alta(string username, string contraseñaHash)
+        public void Alta(string nombreUsuario, string contraseña)
         {
             SqlParameter[] parametros = new SqlParameter[] {
-                new SqlParameter("@username", username),
-                new SqlParameter("@contraseña", contraseñaHash)
+                new SqlParameter("@nombreUsuario", nombreUsuario),
+                new SqlParameter("@contraseña", contraseña)
             };
             _acceso.Escribir(
-                "INSERT INTO Usuario (Username, Contraseña) VALUES (@username, @contraseña)", parametros);
+                "INSERT INTO Usuario (NombreUsuario, Contraseña) VALUES (@nombreUsuario, @contraseña)", parametros);
         }
 
-        public BE.Usuario ObtenerPorUsername(string username)
+        public BE.Usuario ObtenerPorNombreUsuario(string nombreUsuario)
         {
             SqlParameter[] parametros = new SqlParameter[]
             {
-                new SqlParameter("@Username", username)
+                new SqlParameter("@nombreUsuario", nombreUsuario)
             };
 
             try
             {
-                DataTable tabla = _acceso.Leer("SELECT Id, Username, Contraseña FROM Usuario WHERE Username = @Username", parametros);
+                DataTable tabla = _acceso.Leer("SELECT IdUsuario, NombreUsuario, Contraseña FROM Usuario WHERE NombreUsuario = @nombreUsuario", parametros);
 
                 if (tabla != null && tabla.Rows.Count > 0)
                 {
                     DataRow row = tabla.Rows[0];
                     return new BE.Usuario()
                     {
-                        Id = Convert.ToInt32(row["Id"]),
-                        Username = row["Username"].ToString(),
+                        IdUsuario = Convert.ToInt32(row["IdUsuario"]),
+                        NombreUsuario = row["NombreUsuario"].ToString(),
                         Contraseña = row["Contraseña"].ToString()
                     };
                 }

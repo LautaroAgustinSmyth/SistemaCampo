@@ -16,11 +16,11 @@ namespace Servicios
             BE.Bitacora registro = new BE.Bitacora
             {
                 Fecha = DateTime.Now,
-                IdUsuario = sesion.Usuario.Id,
+                IdUsuario = sesion.Usuario.IdUsuario,
                 Modulo = formulario.Text,
                 Actividad = actividad,
                 Criticidad = criticidad,
-                Detalle = $"El usuario '{sesion.Usuario.Username}' realizó '{actividad}' " +
+                Detalle = $"El usuario '{sesion.Usuario.NombreUsuario}' realizó '{actividad}' " +
                              $"en el módulo '{formulario?.Text}' (criticidad: {criticidad})."
             };
             _bitacoraDAL.Registrar(registro);
