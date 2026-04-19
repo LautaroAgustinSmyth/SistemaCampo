@@ -20,7 +20,8 @@ namespace GUI
                 bool esValido = usuarioBLL.Login(this, txtUsuario.Text, txtContraseña.Text);
                 if (esValido)
                 {
-                    lblError.Text = "Usuario Logueado";
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
                 else
                 {

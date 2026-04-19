@@ -14,7 +14,16 @@ namespace GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             BLL.Configuracion.VerificarConexionDAL();
-            Application.Run(new Login());
+
+            Login frmLogin = new Login();
+            if (frmLogin.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new Menu());
+            }
+            else
+            {
+                Application.Exit();
+            }
         }
     }
 }
