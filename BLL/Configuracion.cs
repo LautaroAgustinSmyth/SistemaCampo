@@ -1,30 +1,24 @@
-﻿using System;
-using System.Data;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 
 namespace BLL
 {
-    public class Configuracion
+    public static class Configuracion
     {
-        public static void VerificarConexionDAL()
+        public static bool VerificarConexionDAL()
         {
-            try
+            bool conectado = DAL.Acceso.GetInstance().VerificarConexion();
+
+            if (!conectado)
             {
-                DAL.Acceso acceso = DAL.Acceso.GetInstance();
-                DataTable tabla = acceso.Leer("SELECT 1", null);
-                if (tabla == null || tabla.Rows.Count == 0)
-                {
-                    MessageBox.Show("No se obtuvo respuesta válida de la base de datos. La aplicación se cerrará.", "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                acceso.CerrarConexion();
+                MessageBox.Show(
+                    "No se pudo conectar a la base de datos. Verifique la configuración y vuelva a intentarlo.",
+                    "Error de conexión",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("No se pudo conectar a la base de datos: " + ex.Message, "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+
+            return conectado;
         }
     }
 }

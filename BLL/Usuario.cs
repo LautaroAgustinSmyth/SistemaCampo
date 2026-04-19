@@ -7,18 +7,15 @@ namespace BLL
 {
     public class Usuario
     {
-        private DAL.Usuario usuarioDAL = new DAL.Usuario();
-        private Servicios.Bitacora bitacora = new Servicios.Bitacora();
+        private readonly DAL.Usuario _usuarioDAL = new DAL.Usuario();
+        private readonly Bitacora _bitacora = new Bitacora();
 
         public bool Login(Form formulario, string username, string contraseña)
         {
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(contraseña))
-            {
                 throw new Exception("Credenciales incompletas.");
-            }
 
-            BE.Usuario usuario = usuarioDAL.ObtenerPorUsername(username);
-
+            BE.Usuario usuario = _usuarioDAL.ObtenerPorUsername(username);
             if (usuario == null) return false;
 
             bool esValido = Encriptador.VerificarContraseña(contraseña, usuario.Contraseña);
@@ -26,7 +23,7 @@ namespace BLL
             if (esValido)
             {
                 SessionManager.GetInstance().Login(usuario);
-                bitacora.Registrar(formulario, "Inicio Sesion", 0);
+                _bitacora.Registrar(formulario, "Inicio Sesion", BE.Criticidad.Baja);
             }
 
             return esValido;
@@ -34,14 +31,16 @@ namespace BLL
 
         public void Logout(Form formulario)
         {
-            bitacora.Registrar(formulario, "Cierre Sesion", 0);
-            usuarioDAL.Logout();
+            _bitacora.Registrar(formulario, "Cierre Sesion", BE.Criticidad.Baja);
             SessionManager.GetInstance().Logout();
         }
 
         public void Alta(string username, string contraseña)
         {
-            usuarioDAL.Alta(username, Encriptador.Hash(contraseña));
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(contraseña))
+                throw new ArgumentException("Usuario o contraseña no pueden estar vacíos.");
+
+            _usuarioDAL.Alta(username, Encriptador.Hash(contraseña));
         }
     }
 }

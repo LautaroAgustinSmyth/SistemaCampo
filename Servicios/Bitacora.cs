@@ -6,18 +6,24 @@ namespace Servicios
 {
     public class Bitacora
     {
-        DAL.Bitacora bitacora;
+        private readonly DAL.Bitacora _bitacoraDAL = new DAL.Bitacora();
         public void Registrar(Form formulario, string actividad, Criticidad criticidad)
         {
-            BE.Bitacora registro = new BE.Bitacora();
-            registro.Fecha = DateTime.Now;
-            registro.IdUsuario = Seguridad.SessionManager.GetInstance().Usuario.Id;
-            registro.Modulo = formulario.Text;
-            registro.Actividad = actividad;
-            registro.Detalle = $"Usuario {registro.IdUsuario} realizó la actividad '{actividad}' en el módulo '{registro.Modulo}' con criticidad '{criticidad}'.";
-            registro.Criticidad = criticidad;
+            Seguridad.SessionManager sesion = Seguridad.SessionManager.GetInstance();
 
-            bitacora.Registrar(registro);
+            if (sesion.Usuario == null) return;
+
+            BE.Bitacora registro = new BE.Bitacora
+            {
+                Fecha = DateTime.Now,
+                IdUsuario = sesion.Usuario.Id,
+                Modulo = formulario.Text,
+                Actividad = actividad,
+                Criticidad = criticidad,
+                Detalle = $"El usuario '{sesion.Usuario.Username}' realizó '{actividad}' " +
+                             $"en el módulo '{formulario?.Text}' (criticidad: {criticidad})."
+            };
+            _bitacoraDAL.Registrar(registro);
         }
     }
 }

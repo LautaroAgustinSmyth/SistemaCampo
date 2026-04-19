@@ -8,27 +8,8 @@ namespace DAL
         private static Acceso _instance;
         private static readonly object _lock = new object();
 
-        private readonly string cadenaConexion = "Data Source=.;Initial Catalog=Login;Integrated Security=True";
-        private SqlConnection _conexion;
-        private SqlConnection Conexion
-        {
-            get
-            {
-                if (_conexion == null)
-                {
-                    _conexion = new SqlConnection(cadenaConexion);
-                }
-                if (_conexion.State != ConnectionState.Open)
-                {
-                    _conexion.Open();
-                }
-                return _conexion;
-            }
-        }
-        private Acceso()
-        {
-            _conexion = new SqlConnection(cadenaConexion);
-        }
+        private readonly string _cadenaConexion = "Data Source=.;Initial Catalog=ProyectoFinal;Integrated Security=True";
+        private Acceso() { }
         public static Acceso GetInstance()
         {
             if (_instance == null)
@@ -36,9 +17,7 @@ namespace DAL
                 lock (_lock)
                 {
                     if (_instance == null)
-                    {
                         _instance = new Acceso();
-                    }
                 }
             }
             return _instance;
@@ -46,45 +25,42 @@ namespace DAL
 
         public DataTable Leer(string consulta, SqlParameter[] parametros)
         {
-            using (SqlCommand cmd = new SqlCommand(consulta, Conexion))
+            using (SqlConnection conexion = new SqlConnection(_cadenaConexion))
+            using (SqlCommand cmd = new SqlCommand(consulta, conexion))
             {
                 if (parametros != null)
-                {
                     cmd.Parameters.AddRange(parametros);
-                }
-
+                conexion.Open();
+                DataTable tabla = new DataTable();
                 using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
-                {
-                    DataTable tabla = new DataTable();
                     adapter.Fill(tabla);
-                    return tabla;
-                }
+                return tabla;
             }
         }
 
         public int Escribir(string consulta, SqlParameter[] parametros)
         {
-            using (SqlCommand cmd = new SqlCommand(consulta, Conexion))
+            using (SqlConnection conexion = new SqlConnection(_cadenaConexion))
+            using (SqlCommand cmd = new SqlCommand(consulta, conexion))
             {
                 if (parametros != null)
-                {
                     cmd.Parameters.AddRange(parametros);
-                }
-                int afectadas = cmd.ExecuteNonQuery();
-                return afectadas;
+                conexion.Open();
+                return cmd.ExecuteNonQuery();
             }
         }
 
-        public void CerrarConexion()
+        public bool VerificarConexion()
         {
             try
             {
-                if (_conexion != null && _conexion.State != ConnectionState.Closed)
-                {
-                    _conexion.Close();
-                }
+                var tabla = Leer("SELECT 1", null);
+                return tabla != null && tabla.Rows.Count > 0;
             }
-            catch { }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

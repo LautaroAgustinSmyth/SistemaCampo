@@ -11,10 +11,12 @@ namespace GUI
         public Login()
         {
             InitializeComponent();
+            txtContraseña.PasswordChar = '*';
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
+            lblError.Text = string.Empty;
             try
             {
                 bool esValido = usuarioBLL.Login(this, txtUsuario.Text, txtContraseña.Text);
@@ -26,6 +28,8 @@ namespace GUI
                 else
                 {
                     lblError.Text = "Usuario o contraseña incorrectos.";
+                    txtContraseña.Clear();
+                    txtContraseña.Focus();
                 }
             }
             catch (Exception ex)

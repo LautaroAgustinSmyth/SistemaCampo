@@ -5,6 +5,8 @@ namespace GUI
 {
     public partial class Menu : Form
     {
+        private readonly BLL.Usuario _usuarioBLL = new BLL.Usuario();
+
         public Menu()
         {
             InitializeComponent();
@@ -12,8 +14,7 @@ namespace GUI
 
         private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BLL.Usuario usuarioBLL = new BLL.Usuario();
-            usuarioBLL.Logout(this);
+            _usuarioBLL.Logout(this);
             Application.Restart();
         }
 

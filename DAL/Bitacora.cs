@@ -5,7 +5,7 @@ namespace DAL
 {
     public class Bitacora
     {
-        Acceso acceso = Acceso.GetInstance();
+        private readonly Acceso _acceso = Acceso.GetInstance();
         public void Registrar(BE.Bitacora registro)
         {
             SqlParameter[] parametros = new SqlParameter[] {
@@ -13,17 +13,17 @@ namespace DAL
                 new SqlParameter("@usuario",registro.IdUsuario),
                 new SqlParameter("@modulo",registro.Modulo),
                 new SqlParameter("@actividad",registro.Actividad),
-                new SqlParameter("@detalle",registro.Detalle),
-                new SqlParameter("criticidad",registro.Criticidad)
+                new SqlParameter("@criticidad",(int)registro.Criticidad),
+                new SqlParameter("@detalle",registro.Detalle)
             };
 
             try
             {
-                acceso.Escribir("INSERT INTO Bitacora (fecha, usuario, modulo, actividad, detalle, criticidad) VALUES (@fecha, @usuario, @modulo, @actividad, @detalle, @criticidad)", parametros);
+                _acceso.Escribir("INSERT INTO Bitacora (fecha, usuario, modulo, actividad, criticidad, detalle) VALUES (@fecha, @usuario, @modulo, @actividad, @criticidad, @detalle)", parametros);
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("Error al Crear el registro de Bitacora", ex);
+                throw new Exception("Error al registrar en Bitácora.", ex);
             }
         }
     }
