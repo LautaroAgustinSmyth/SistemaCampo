@@ -1,6 +1,4 @@
-﻿using Seguridad;
-using Servicios;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace BLL
@@ -23,7 +21,20 @@ namespace BLL
             if (esValido)
             {
                 SessionManager.GetInstance().Login(usuario);
+                try
+                {
+                    _usuarioDAL.ActualizarUltimoInicio(usuario.IdUsuario);
+                }
+                catch { }
                 _bitacora.Registrar(formulario, "Inicio Sesion", BE.Criticidad.Baja);
+            }
+            else
+            {
+                try
+                {
+                    _usuarioDAL.IncrementarIntentosFallidos(nombreUsuario);
+                }
+                catch { }
             }
 
             return esValido;
