@@ -14,7 +14,7 @@ namespace GUI
             StartPosition = FormStartPosition.CenterScreen;
         }
 
-        private void btnIngresar_Click(object sender, EventArgs e)
+        private void BtnIngresar_Click(object sender, EventArgs e)
         {
             lblError.Text = string.Empty;
             try

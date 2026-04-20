@@ -13,13 +13,13 @@ namespace GUI
             StartPosition = FormStartPosition.CenterScreen;
         }
 
-        private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _usuarioBLL.CerrarSesion(this.Text);
             Application.Restart();
         }
 
-        private void bitacoraToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BitacoraToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Bitacora hijo = new Bitacora();
             hijo.MdiParent = this;

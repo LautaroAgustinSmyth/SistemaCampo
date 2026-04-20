@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace DAL
 {
-    public class Acceso
+    public sealed class Acceso
     {
         private static Acceso _instance;
         private static readonly object _lock = new object();

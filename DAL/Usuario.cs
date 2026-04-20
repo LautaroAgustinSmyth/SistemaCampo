@@ -74,7 +74,7 @@ namespace DAL
                     "SELECT IdUsuario, NombreUsuario, Contraseña, FechaRegistro, FechaUltimoInicio, Activo, Bloqueado, IntentosFallidos " +
                     "FROM Usuario WHERE NombreUsuario = @nombreUsuario", parametros);
 
-                if (tabla != null && tabla.Rows.Count > 0)
+                if (tabla?.Rows.Count > 0)
                 {
                     DataRow row = tabla.Rows[0];
                     return new BE.Usuario()

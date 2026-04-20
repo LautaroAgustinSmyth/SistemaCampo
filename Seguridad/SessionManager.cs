@@ -2,7 +2,7 @@
 
 namespace Seguridad
 {
-    public class SessionManager
+    public sealed class SessionManager
     {
         private static SessionManager _instance;
         private static readonly object _lock = new object();
