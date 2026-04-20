@@ -1,12 +1,11 @@
-﻿using BLL;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace GUI
 {
     public partial class Login : Form
     {
-        private Usuario _usuarioBLL = new Usuario();
+        private readonly BLL.Usuario _usuarioBLL = new BLL.Usuario();
 
         public Login()
         {
@@ -20,7 +19,7 @@ namespace GUI
             lblError.Text = string.Empty;
             try
             {
-                bool esValido = _usuarioBLL.Login(this, txtUsuario.Text, txtContraseña.Text);
+                bool esValido = _usuarioBLL.IniciarSesion(this.Text, txtUsuario.Text, txtContraseña.Text);
                 if (esValido)
                 {
                     this.DialogResult = DialogResult.OK;
@@ -33,9 +32,22 @@ namespace GUI
                     txtContraseña.Focus();
                 }
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
                 lblError.Text = ex.Message;
+            }
+            catch (ArgumentException ex)
+            {
+                lblError.Text = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Error inesperado. Intente nuevamente.";
+                System.Diagnostics.Debug.WriteLine($"[Login] {ex}");
+            }
+            finally
+            {
+                txtContraseña.Clear();
             }
         }
     }

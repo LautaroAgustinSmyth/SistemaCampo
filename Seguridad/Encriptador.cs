@@ -28,7 +28,7 @@ namespace Seguridad
             }
         }
 
-        public static bool VerificarContraseña(string contraseñaIngresada, string hashAlmacenado)
+        public static bool Verificar(string contraseñaIngresada, string hashAlmacenado)
         {
             // 1. Obtener bytes del string Base64
             byte[] hashBytes = Convert.FromBase64String(hashAlmacenado);

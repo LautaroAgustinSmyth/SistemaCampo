@@ -1,22 +1,10 @@
-﻿using System.Windows.Forms;
-
-namespace BLL
+﻿namespace BLL
 {
     public static class Configuracion
     {
         public static bool VerificarConexionDAL()
         {
-            bool conectado = DAL.Acceso.GetInstance().VerificarConexion();
-
-            if (!conectado)
-            {
-                MessageBox.Show("No se pudo conectar a la base de datos...",
-                    "Error de conexión",
-                MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-
-            return conectado;
+            return DAL.Acceso.GetInstance().VerificarConexion();
         }
     }
 }

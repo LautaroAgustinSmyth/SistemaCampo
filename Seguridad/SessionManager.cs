@@ -8,7 +8,8 @@ namespace Seguridad
         private static readonly object _lock = new object();
         public Usuario Usuario { get; private set; }
 
-        private SessionManager() { }
+        private SessionManager()
+        { }
 
         public static SessionManager GetInstance()
         {

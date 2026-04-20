@@ -70,7 +70,6 @@ namespace DAL
 
             try
             {
-
                 DataTable tabla = _acceso.Leer(
                     "SELECT IdUsuario, NombreUsuario, Contraseña, FechaRegistro, FechaUltimoInicio, Activo, Bloqueado, IntentosFallidos " +
                     "FROM Usuario WHERE NombreUsuario = @nombreUsuario", parametros);

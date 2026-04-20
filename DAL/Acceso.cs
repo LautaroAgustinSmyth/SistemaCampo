@@ -12,7 +12,8 @@ namespace DAL
 
         private readonly string _cadenaConexion = ConfigurationManager.ConnectionStrings["MiConexionSQL"].ConnectionString;
 
-        private Acceso() { }
+        private Acceso()
+        { }
 
         public static Acceso GetInstance()
         {

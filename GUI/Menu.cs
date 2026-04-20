@@ -15,7 +15,7 @@ namespace GUI
 
         private void cerrarSesionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _usuarioBLL.Logout(this);
+            _usuarioBLL.CerrarSesion(this.Text);
             Application.Restart();
         }
 

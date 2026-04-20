@@ -13,18 +13,18 @@ namespace GUI
 
             if (!BLL.Configuracion.VerificarConexionDAL())
             {
-                Application.Exit();
+                MessageBox.Show(
+                    "No se pudo conectar a la base de datos. Verifique la configuración.",
+                    "Error de conexión",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
                 return;
             }
 
-            Login frmLogin = new Login();
-            if (frmLogin.ShowDialog() == DialogResult.OK)
+            using (var frmLogin = new Login())
             {
-                Application.Run(new Menu());
-            }
-            else
-            {
-                Application.Exit();
+                if (frmLogin.ShowDialog() == DialogResult.OK)
+                    Application.Run(new Menu());
             }
         }
     }

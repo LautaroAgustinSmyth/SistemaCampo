@@ -2,7 +2,6 @@
 using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Windows.Forms;
 
 namespace Servicios
 {
@@ -10,37 +9,45 @@ namespace Servicios
     {
         private readonly DAL.Bitacora _bitacoraDAL = new DAL.Bitacora();
 
-        public void Registrar(Form formulario, string actividad, Criticidad criticidad)
+        public void Registrar(string modulo, string actividad, Criticidad criticidad)
         {
             Seguridad.SessionManager sesion = Seguridad.SessionManager.GetInstance();
+
+            BE.Usuario usuario = sesion.Usuario;
 
             if (sesion.Usuario == null) return;
 
             BE.Bitacora registro = new BE.Bitacora
             {
                 Fecha = DateTime.Now,
-                IdUsuario = sesion.Usuario.IdUsuario,
-                NombreUsuario = sesion.Usuario.NombreUsuario,
-                Modulo = formulario.Text,
+                IdUsuario = usuario.IdUsuario,
+                NombreUsuario = usuario.NombreUsuario,
+                Modulo = modulo ?? string.Empty,
                 Actividad = actividad,
                 Criticidad = criticidad,
-                Detalle = $"El usuario '{sesion.Usuario.NombreUsuario}' realizó '{actividad}' " +
-                             $"en el módulo '{formulario?.Text}' (criticidad: {criticidad}).",
+                Detalle = $"El usuario '{usuario.NombreUsuario}' realizó '{actividad}' " +
+                                 $"en el módulo '{modulo}' (criticidad: {criticidad}).",
                 IP = ObtenerIPLocal()
             };
             _bitacoraDAL.Registrar(registro);
         }
+
         public static string ObtenerIPLocal()
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
+            try
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                var host = Dns.GetHostEntry(Dns.GetHostName());
+                foreach (var ip in host.AddressList)
                 {
-                    return ip.ToString();
+                    if (ip.AddressFamily == AddressFamily.InterNetwork)
+                        return ip.ToString();
                 }
             }
-            throw new Exception("No network adapters with an IPv4 address in the system!");
+            catch (Exception ex)
+            {
+                throw new Exception("No se pudo obtener la dirección IP local.", ex);
+            }
+            return "IP desconocida";
         }
     }
 }
